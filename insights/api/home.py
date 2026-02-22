@@ -37,10 +37,7 @@ def get_last_viewed_records():
             ViewLog.reference_name,
             Max(ViewLog.modified).as_("creation"),
         )
-        .where(
-            (ViewLog.viewed_by == frappe.session.user)
-            & ViewLog.reference_doctype.isin(TRACKED_DOCTYPES)
-        )
+        .where((ViewLog.viewed_by == frappe.session.user) & ViewLog.reference_doctype.isin(TRACKED_DOCTYPES))
         .groupby(ViewLog.reference_doctype, ViewLog.reference_name)
         .orderby(Max(ViewLog.modified).as_("creation"), order=frappe.qb.desc)
         .limit(20)
@@ -55,9 +52,7 @@ def get_last_viewed_records():
 def fetch_titles(records):
     docnames_by_doctype = {}
     for record in records:
-        docnames_by_doctype.setdefault(record.reference_doctype, []).append(
-            record.reference_name
-        )
+        docnames_by_doctype.setdefault(record.reference_doctype, []).append(record.reference_name)
 
     for doctype, docnames in docnames_by_doctype.items():
         titles = frappe.get_all(
@@ -67,10 +62,7 @@ def fetch_titles(records):
         )
         for title in titles:
             for record in records:
-                if (
-                    record.reference_doctype == doctype
-                    and record.reference_name == title.name
-                ):
+                if record.reference_doctype == doctype and record.reference_name == title.name:
                     record["title"] = title.title
                     break
 
@@ -79,9 +71,7 @@ def fetch_notebook_names(records):
     docnames_by_doctype = {}
     for record in records:
         if record.reference_doctype == "Insights Notebook Page":
-            docnames_by_doctype.setdefault(record.reference_doctype, []).append(
-                record.reference_name
-            )
+            docnames_by_doctype.setdefault(record.reference_doctype, []).append(record.reference_name)
 
     for doctype, docnames in docnames_by_doctype.items():
         notebooks = frappe.get_all(
@@ -91,9 +81,6 @@ def fetch_notebook_names(records):
         )
         for notebook in notebooks:
             for record in records:
-                if (
-                    record.reference_doctype == doctype
-                    and record.reference_name == notebook.name
-                ):
+                if record.reference_doctype == doctype and record.reference_name == notebook.name:
                     record["notebook"] = notebook.notebook
                     break

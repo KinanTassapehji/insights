@@ -74,7 +74,7 @@ def import_workbook(workbook: dict):
 
 
 @insights_whitelist()
-def get_share_permissions(workbook_name:str):
+def get_share_permissions(workbook_name: str):
     if not frappe.has_permission("Insights Workbook", ptype="share", doc=workbook_name):
         frappe.throw(_("You do not have permission to share this workbook"))
 
@@ -127,7 +127,9 @@ def get_share_permissions(workbook_name:str):
 
 
 @insights_whitelist()
-def update_share_permissions(workbook_name:str, user_permissions: dict, organization_access: str | None = None):
+def update_share_permissions(
+    workbook_name: str, user_permissions: dict, organization_access: str | None = None
+):
     if not frappe.has_permission("Insights Workbook", ptype="share", doc=workbook_name):
         frappe.throw(_("You do not have permission to share this workbook"))
 
@@ -158,16 +160,14 @@ def update_share_permissions(workbook_name:str, user_permissions: dict, organiza
 
 # folder Management APIs
 
+
 @insights_whitelist()
 def create_folder(workbook: str, title: str, folder_type: str):
     """Create a new folder in workbook"""
     if not frappe.has_permission("Insights Workbook", ptype="write", doc=workbook):
         frappe.throw(_("You do not have permission to modify this workbook"))
 
-    current_folders = frappe.db.count(
-        "Insights Folder",
-        filters={"workbook": workbook, "type": folder_type}
-    )
+    current_folders = frappe.db.count("Insights Folder", filters={"workbook": workbook, "type": folder_type})
 
     folder = frappe.new_doc("Insights Folder")
     folder.workbook = workbook
@@ -177,6 +177,7 @@ def create_folder(workbook: str, title: str, folder_type: str):
     folder.insert()
 
     return folder.name
+
 
 @insights_whitelist()
 def rename_folder(folder_name: str, new_title: str):
@@ -189,6 +190,7 @@ def rename_folder(folder_name: str, new_title: str):
     folder.save()
 
     return folder.name
+
 
 @insights_whitelist()
 def delete_folder(folder_name: str, move_items_to_root: bool = True):
@@ -217,6 +219,7 @@ def delete_folder(folder_name: str, move_items_to_root: bool = True):
 
     frappe.delete_doc("Insights Folder", folder_name)
 
+
 @insights_whitelist()
 def toggle_folder_expanded(folder_name: str, is_expanded: bool):
     """Toggle folder expanded state"""
@@ -225,6 +228,7 @@ def toggle_folder_expanded(folder_name: str, is_expanded: bool):
         frappe.throw(_("You do not have permission to modify this workbook"))
 
     folder.db_set("is_expanded", is_expanded, update_modified=False)
+
 
 @insights_whitelist()
 def move_item_to_folder(item_type: str, item_name: str, folder_name: str | None = None):

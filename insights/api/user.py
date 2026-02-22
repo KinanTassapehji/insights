@@ -125,18 +125,12 @@ def get_teams(search_term: str | None = None):
     )
 
     for team in teams:
-        team.team_members = [
-            {"user": member.user} for member in members if member.parent == team.name
-        ]
+        team.team_members = [{"user": member.user} for member in members if member.parent == team.name]
         team.team_permissions = [
-            permission
-            for permission in source_permissions
-            if permission.parent == team.name
+            permission for permission in source_permissions if permission.parent == team.name
         ]
         team.team_permissions += [
-            permission
-            for permission in table_permissions
-            if permission.parent == team.name
+            permission for permission in table_permissions if permission.parent == team.name
         ]
 
     return teams

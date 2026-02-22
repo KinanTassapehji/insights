@@ -27,9 +27,7 @@ def setup_sample_data(dataset: str):
 
 
 def import_demo_queries_and_dashboards():
-    demo_dashboard_exists = frappe.db.exists(
-        "Insights Dashboard", {"title": "eCommerce"}
-    )
+    demo_dashboard_exists = frappe.db.exists("Insights Dashboard", {"title": "eCommerce"})
     if demo_dashboard_exists:
         return
     try:

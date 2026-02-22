@@ -12,9 +12,7 @@ def get_dashboard_list():
     )
     for dashboard in dashboards:
         if dashboard._liked_by:
-            dashboard["is_favourite"] = frappe.session.user in frappe.as_json(
-                dashboard._liked_by
-            )
+            dashboard["is_favourite"] = frappe.session.user in frappe.as_json(dashboard._liked_by)
         dashboard["charts"] = frappe.get_all(
             "Insights Dashboard Item",
             filters={

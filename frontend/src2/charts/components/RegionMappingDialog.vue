@@ -27,7 +27,7 @@ watch(
 	async (open) => {
 		if (open) await loadData()
 	},
-	{ immediate: true }
+	{ immediate: true },
 )
 
 async function loadData() {
@@ -147,7 +147,7 @@ const unresolvedRegions = computed(() => {
 	})
 
 	const filteredRegions = regions.filter((region) =>
-		region.user_region.toLowerCase().includes(searchQuery.value.toLowerCase())
+		region.user_region.toLowerCase().includes(searchQuery.value.toLowerCase()),
 	)
 	return filteredRegions
 })

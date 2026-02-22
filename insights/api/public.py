@@ -70,9 +70,7 @@ def fetch_column_values_public(public_key, item_id, search_text=None):
     if not public_key or not isinstance(public_key, str):
         frappe.throw("Public Key is required")
 
-    dashboard_name = frappe.db.exists(
-        "Insights Dashboard", {"public_key": public_key, "is_public": 1}
-    )
+    dashboard_name = frappe.db.exists("Insights Dashboard", {"public_key": public_key, "is_public": 1})
     if not dashboard_name:
         frappe.throw("Invalid Public Key")
 

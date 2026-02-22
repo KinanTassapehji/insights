@@ -24,11 +24,7 @@ def get_data_store_tables(data_source: str | None = None, search_term: str | Non
         )
         .where(
             (Table.stored == 1)
-            & (
-                Table.data_source == data_source
-                if data_source
-                else Table.data_source.like("%")
-            )
+            & (Table.data_source == data_source if data_source else Table.data_source.like("%"))
             & (
                 (Table.label == search_term if search_term else Table.label.like("%"))
                 | (Table.table == search_term if search_term else Table.table.like("%"))

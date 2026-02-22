@@ -21,7 +21,7 @@ watch(
 			userStore.getUsers()
 		}
 	},
-	{ immediate: true }
+	{ immediate: true },
 )
 
 const teamModified = computed(() => {
@@ -47,7 +47,7 @@ function removeMember(userEmail: string) {
 		return
 	}
 	currentTeam.value.team_members = currentTeam.value.team_members.filter(
-		(u) => u.user !== userEmail
+		(u) => u.user !== userEmail,
 	)
 }
 
@@ -115,10 +115,7 @@ const activeTab = ref('Members')
 					</div>
 
 					<div class="flex flex-1 flex-col gap-1 overflow-y-auto">
-						<div
-							v-if="userStore.loading"
-							class="flex items-center justify-center py-8"
-						>
+						<div v-if="userStore.loading" class="flex items-center justify-center py-8">
 							<LoadingIndicator class="h-6 w-6 text-gray-600" />
 						</div>
 						<div
